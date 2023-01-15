@@ -9,7 +9,7 @@ class DOMHelper {
     const el = document.getElementById(elemId);
     const destinationEl = document.querySelector(newDestinationSelector);
     destinationEl.append(el);
-    el.scrollIntoView({behavior: 'smooth'})
+    el.scrollIntoView({ behavior: "smooth" });
   }
 }
 
@@ -38,11 +38,11 @@ class Component {
 class Tooltip extends Component {
   element;
   closePrevTooltip;
-  #text = '';
+  #text = "";
 
   constructor(id, textContent, closeTooltipFunc) {
     super(id);
-    this.#text = textContent
+    this.#text = textContent;
     this.closePrevTooltip = closeTooltipFunc;
     this.create();
   }
@@ -64,12 +64,17 @@ class Tooltip extends Component {
     const x = hostPosLeft + 20;
     const y = hostPosTop + hostPosHeight - 10 - scrollHeight;
 
-    elem.style.position = 'absolute';
+    elem.style.position = "absolute";
     elem.style.left = `${x}px`;
     elem.style.top = `${y}px`;
 
-    console.log(this.host.getBoundingClientRect());
-    elem.textContent = this.#text;
+    const templateEl = document.querySelector("#tooltip");
+    const templateContent = document.importNode(templateEl.content, true);
+    templateContent.querySelector('p').textContent = this.#text;
+    elem.append(templateContent)
+
+    // console.log(this.host.getBoundingClientRect());
+    // elem.textContent = this.#text;
     elem.addEventListener("click", this.closeTooltip);
     this.element = elem;
   }
