@@ -9,6 +9,7 @@ class DOMHelper {
     const el = document.getElementById(elemId);
     const destinationEl = document.querySelector(newDestinationSelector);
     destinationEl.append(el);
+    el.scrollIntoView({behavior: 'smooth'})
   }
 }
 
@@ -37,9 +38,11 @@ class Component {
 class Tooltip extends Component {
   element;
   closePrevTooltip;
+  #text = '';
 
-  constructor(type, closeTooltipFunc) {
-    super(type ? `${type}-projects` : "", type !== "active");
+  constructor(id, textContent, closeTooltipFunc) {
+    super(id);
+    this.#text = textContent
     this.closePrevTooltip = closeTooltipFunc;
     this.create();
   }
@@ -52,7 +55,21 @@ class Tooltip extends Component {
   create() {
     const elem = document.createElement("div");
     elem.className = "card";
-    elem.textContent = "LOREM" + Math.random();
+
+    const hostPosLeft = this.host.offsetLeft;
+    const hostPosTop = this.host.offsetTop;
+    const hostPosHeight = this.host.clientHeight;
+    const scrollHeight = this.host.parentElement.scrollTop;
+
+    const x = hostPosLeft + 20;
+    const y = hostPosTop + hostPosHeight - 10 - scrollHeight;
+
+    elem.style.position = 'absolute';
+    elem.style.left = `${x}px`;
+    elem.style.top = `${y}px`;
+
+    console.log(this.host.getBoundingClientRect());
+    elem.textContent = this.#text;
     elem.addEventListener("click", this.closeTooltip);
     this.element = elem;
   }
@@ -67,7 +84,6 @@ class ProjectItem {
   constructor(id, updateProjListFunc, type) {
     this.id = id;
     this.type = type;
-    console.log(this.type);
     this.updateProjListFuncHandler = updateProjListFunc;
     this.getMoreInfo();
     this.switchProjectHandler(this.type);
@@ -77,8 +93,10 @@ class ProjectItem {
     if (this.hasTooltip) {
       return;
     }
+    const el = document.querySelector(`#${this.id}`);
+    const text = el.dataset && el.dataset.extraInfo ? el.dataset.extraInfo : "";
 
-    const tooltip = new Tooltip(this.type, () => (this.hasTooltip = false));
+    const tooltip = new Tooltip(this.id, text, () => (this.hasTooltip = false));
     tooltip.init();
     this.hasTooltip = true;
   }
@@ -102,7 +120,6 @@ class ProjectItem {
   }
 
   update(updateProjListFn, type) {
-    console.log("TYPE ", type);
     this.updateProjListFuncHandler = updateProjListFn;
     this.switchProjectHandler(type);
   }
