@@ -19,7 +19,9 @@ class Component {
   #insertBefore = false;
 
   constructor(hostId, insertBefore = false) {
-    this.#hostSelector = hostId ? document.getElementById(hostId) : document.body;
+    this.#hostSelector = hostId
+      ? document.getElementById(hostId)
+      : document.body;
     this.#insertBefore = insertBefore;
   }
 
@@ -49,7 +51,7 @@ class Tooltip extends Component {
     this.#create();
   }
 
-  #closeTooltip = () => {
+  closeTooltip = () => {
     this.destroy();
     this.closePrevTooltip();
   };
@@ -63,7 +65,7 @@ class Tooltip extends Component {
     templateContent.querySelector("p").textContent = this.#text;
     elem.append(templateContent);
 
-    elem.addEventListener("click", this.#closeTooltip);
+    elem.addEventListener("click", this.closeTooltip);
     this.element = elem;
   }
 }
