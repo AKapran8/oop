@@ -1,12 +1,9 @@
 export class Component {
-  #hostSelector;
-  #insertBefore = false;
-
   constructor(hostId, insertBefore = false) {
-    this.#hostSelector = hostId
+    this.hostSelector = hostId
       ? document.getElementById(hostId)
       : document.body;
-    this.#insertBefore = insertBefore;
+    this.insertBefore = insertBefore;
   }
 
   destroy() {
@@ -16,8 +13,8 @@ export class Component {
   }
 
   init() {
-    this.#hostSelector.insertAdjacentElement(
-      this.#insertBefore ? "afterbegin" : "beforeend",
+    this.hostSelector.insertAdjacentElement(
+      this.insertBefore ? "afterbegin" : "beforeend",
       this.element
     );
   }

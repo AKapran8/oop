@@ -1,17 +1,14 @@
-import { DOMHelper } from "./DOMHelper.js";
+import { DOMHelper } from "./DOMHelper";
 
 export class ProjectItem {
-  id = null;
-  #type = "";
-  #updateProjListFuncHandler;
-  hasTooltip = false;
 
   constructor(id, updateProjListFunc, type) {
+    this.hasTooltip = false;
     this.id = id;
-    this.#type = type;
-    this.#updateProjListFuncHandler = updateProjListFunc;
-    this.#getMoreInfo();
-    this.#switchProjectHandler(this.#type);
+    this.type = type ? type : '';
+    this.updateProjListFuncHandler = updateProjListFunc;
+    this.getMoreInfo();
+    this.switchProjectHandler(this.type);
     this.initDrag();
   }
 
@@ -22,14 +19,14 @@ export class ProjectItem {
     });
   }
 
-  #showModeInfoHandler() {
+  showModeInfoHandler() {
     if (this.hasTooltip) {
       return;
     }
 
     const el = document.querySelector(`#${this.id}`);
     const text = el.dataset && el.dataset.extraInfo ? el.dataset.extraInfo : "";
-    import("./Tooltip.js").then((module) => {
+    import("./Tooltip").then((module) => {
       const tooltip = new module.Tooltip(
         this.id,
         text,
@@ -40,14 +37,14 @@ export class ProjectItem {
     });
   }
 
-  #getMoreInfo() {
+  getMoreInfo() {
     const elem = document.querySelector(`#${this.id}`);
     let moreInfoBtn = elem.querySelector("button:first-of-type");
     moreInfoBtn = DOMHelper.clearEventListener(moreInfoBtn);
-    moreInfoBtn.addEventListener("click", this.#showModeInfoHandler.bind(this));
+    moreInfoBtn.addEventListener("click", this.showModeInfoHandler.bind(this));
   }
 
-  #switchProjectHandler(type) {
+  switchProjectHandler(type) {
     const elem = document.querySelector(`#${this.id}`);
     let switchBtn = elem.querySelector("button:last-of-type");
 
@@ -56,12 +53,12 @@ export class ProjectItem {
 
     switchBtn.addEventListener(
       "click",
-      this.#updateProjListFuncHandler.bind(null, this.id)
+      this.updateProjListFuncHandler.bind(null, this.id)
     );
   }
 
   update(updateProjListFn, type) {
-    this.#updateProjListFuncHandler = updateProjListFn;
-    this.#switchProjectHandler(type);
+    this.updateProjListFuncHandler = updateProjListFn;
+    this.switchProjectHandler(type);
   }
 }

@@ -1,22 +1,22 @@
-import { ProjectItem } from "./ProjectItem.js";
-import { DOMHelper } from "./DOMHelper.js";
+import { ProjectItem } from "./ProjectItem";
+import { DOMHelper } from "./DOMHelper";
 
 export class ProjectsList {
-  #projects = [];
-  #switchHandler;
-
   constructor(type) {
     this.type = type;
+    this.projects = [];
+    this.switchHandler;
     const items = document.querySelectorAll(`#${type}-projects li`);
     for (const item of items) {
-      this.#projects.push(
+      this.projects.push(
         new ProjectItem(item.id, this.switchProject.bind(this), this.type)
       );
     }
-    this.connectDropp();
+    
+    this.connectDropp().bind(this);
   }
 
-  connectDropp = () => {
+  connectDropp() {
     const list = document.querySelector(`#${this.type}-projects ul`);
 
     list.addEventListener("dragenter", (event) => {
@@ -44,7 +44,7 @@ export class ProjectsList {
     list.addEventListener("drop", (event) => {
       const projId = event.dataTransfer.getData("text/plain");
 
-      if (this.#projects.find((p) => p.id === projId)) {
+      if (this.projects.find((p) => p.id === projId)) {
         return;
       }
 
@@ -58,17 +58,17 @@ export class ProjectsList {
   };
 
   setSwitchHandlerFunc(switchHandlerFunc) {
-    this.#switchHandler = switchHandlerFunc;
+    this.switchHandler = switchHandlerFunc;
   }
 
   addProject(project) {
-    this.#projects.push(project);
+    this.projects.push(project);
     DOMHelper.moveElement(project.id, `#${this.type}-projects ul`);
     project.update(this.switchProject.bind(this), this.type);
   }
 
   switchProject(projectId) {
-    this.#switchHandler(this.#projects.find((p) => p.id === projectId));
-    this.#projects = this.#projects.filter((p) => p.id !== projectId);
+    this.switchHandler(this.projects.find((p) => p.id === projectId));
+    this.projects = this.projects.filter((p) => p.id !== projectId);
   }
 }
