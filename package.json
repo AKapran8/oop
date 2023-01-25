@@ -16,7 +16,5 @@
     "url": "https://github.com/AKapran8/oop/issues"
   },
   "homepage": "https://github.com/AKapran8/oop#readme",
-  "dependencies": {
-    "eslist": "^1.0.0-beta.1"
-  }
+  "devDependencies": {}
 }
