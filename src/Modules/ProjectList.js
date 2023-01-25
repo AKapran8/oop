@@ -13,7 +13,7 @@ export class ProjectsList {
       );
     }
     
-    this.connectDropp().bind(this);
+    this.connectDropp();
   }
 
   connectDropp() {
