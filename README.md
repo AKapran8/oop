@@ -2,6 +2,9 @@
 # modules structure
 
 # Webpack
-for this app I use node version 14.20.0
+for this app I use node version 16.19.0
 
 # Steps
+npm init
+
+npm i --save-dev eslint
