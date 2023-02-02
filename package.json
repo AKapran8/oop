@@ -4,7 +4,8 @@
   "description": "# Webpack for this app I use node version 14.20.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,8 @@
   },
   "homepage": "https://github.com/AKapran8/oop#readme",
   "devDependencies": {
-    "eslint": "^8.33.0"
+    "eslint": "^8.33.0",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   }
 }
