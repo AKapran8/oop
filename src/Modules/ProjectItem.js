@@ -1,4 +1,4 @@
-import { DOMHelper } from "./DOMHelper.js";
+import { DOMHelper } from "./DOMHelper";
 
 export class ProjectItem {
 

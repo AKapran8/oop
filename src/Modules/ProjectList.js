@@ -1,5 +1,5 @@
-import { ProjectItem } from "./ProjectItem.js";
-import { DOMHelper } from "./DOMHelper.js";
+import { ProjectItem } from "./ProjectItem";
+import { DOMHelper } from "./DOMHelper";
 
 export class ProjectsList {
   constructor(type) {
