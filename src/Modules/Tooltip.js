@@ -1,4 +1,4 @@
-import { Component } from "./Component.js";
+import { Component } from "./Component";
 
 export class Tooltip extends Component {
 

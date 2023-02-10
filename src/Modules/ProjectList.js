@@ -1,5 +1,5 @@
-import { ProjectItem } from "./ProjectItem.js";
-import { DOMHelper } from "./DOMHelper.js";
+import { ProjectItem } from "./ProjectItem";
+import { DOMHelper } from "./DOMHelper";
 
 export class ProjectsList {
   constructor(type) {
@@ -12,7 +12,7 @@ export class ProjectsList {
         new ProjectItem(item.id, this.switchProject.bind(this), this.type)
       );
     }
-    
+
     this.connectDropp();
   }
 
@@ -55,7 +55,7 @@ export class ProjectsList {
       list.parentElement.classList.remove("droppble");
       event.preventDefault();
     });
-  };
+  }
 
   setSwitchHandlerFunc(switchHandlerFunc) {
     this.switchHandler = switchHandlerFunc;
